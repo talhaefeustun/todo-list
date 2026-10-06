@@ -30,6 +30,10 @@ public class TodoList {
     return items.get(index).getTitle();
   }
 
+  public void setTitle(int index, String title) {
+    items.get(index).setTitle(title);
+  }
+
   public boolean isCompleted(int index) {
     return items.get(index).isCompleted();
   }

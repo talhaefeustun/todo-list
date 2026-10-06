@@ -24,6 +24,8 @@ public class TodoListPanel extends JPanel implements ActionListener {
     private final DefaultListModel<String> textModel;
     private final TodoList todoList;
 
+    private final JList<String> textList;
+
     public TodoListPanel() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -37,7 +39,7 @@ public class TodoListPanel extends JPanel implements ActionListener {
         loadJsonFromFile();
         updateTodoModel();
 
-        JList<String> textList = new JList<>(textModel);
+        textList = new JList<>(textModel);
         JScrollPane scrollPane = new JScrollPane(textList);
 
         ListSelectionModel listSelectionModel = textList.getSelectionModel();
@@ -173,9 +175,12 @@ public class TodoListPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         String title = textField.getText();
-
-        todoList.addItem(title);
-
+        int selectedIndex = textList.getSelectedIndex();
+        if (selectedIndex != -1) {
+            todoList.setTitle(selectedIndex, title);
+        } else {
+            todoList.addItem(title);
+        }
         updateTodoModel();
         textField.selectAll();
     }
